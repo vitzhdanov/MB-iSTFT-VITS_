@@ -1,0 +1,5 @@
+separator: ''
+arpa_model: 'models_and_dicts/arpa.fst'
+path_to_dict: 'models_and_dicts'
+logs_dir: ''
+pipeline: ['yo_replacer', 'accentor_spacy', 'accentor_static', 'ipa_phonemizer']

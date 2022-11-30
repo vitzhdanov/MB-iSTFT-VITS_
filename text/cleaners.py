@@ -15,6 +15,9 @@ hyperparameter. Some cleaners are English-specific. You'll typically want to use
 import re
 from unidecode import unidecode
 from phonemizer import phonemize
+from target_phonemizer.manager import Manager
+accentuater = Manager.from_config('Config.yaml')
+fonemoficater = Manager.from_config('Config_fonem.yaml')
 
 
 # Regular expression matching whitespace:
@@ -86,6 +89,24 @@ def english_cleaners(text):
   text = lowercase(text)
   text = expand_abbreviations(text)
   phonemes = phonemize(text, language='en-us', backend='espeak', strip=True)
+  phonemes = collapse_whitespace(phonemes)
+  return phonemes
+
+
+def russian_cleaners(text):
+  '''Pipeline for Russian text'''
+  text = lowercase(text)
+  text = expand_abbreviations(text)
+  phonemes = accentuater.process(text)
+  phonemes = collapse_whitespace(phonemes)
+  return phonemes
+
+
+def russian_cleaners_fonem(text):
+  '''Pipeline for Russian text'''
+  text = lowercase(text)
+  text = expand_abbreviations(text)
+  phonemes = fonemoficater.process(text)
   phonemes = collapse_whitespace(phonemes)
   return phonemes
 
